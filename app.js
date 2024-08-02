@@ -6,7 +6,7 @@ import express from "express";
 // Import your helper functions for your first resource here
 import {
 getSuperheroes,
-getResourceOneById,
+getSuperheroesById,
 createResourceOne,
 updateResourceOneById,
 deleteResourceOneById,
@@ -16,7 +16,7 @@ deleteResourceOneById,
 //Import your helper functions for your second resource here
 import {
 getVillains,
-getResourceTwoById,
+getVillainsById,
 createResourceTwo,
 updateResourceTwoById,
 deleteResourceTwoById,
@@ -44,7 +44,16 @@ app.get("/superheroes/", async function (req, res) {
 
 
 // Endpoint to retrieve a <resource_one> by id
-app.get("/resourceone/:id", async function (req, res) {
+app.get("/superheroes/:id", async function (req, res) {
+  const id = req.params.id;
+  const superheroesById = await getSuperheroesById(id);
+  // Assume 404 status if the author is not found
+  if (!superheroesById) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Superhero not found" } });
+  }
+  res.status(200).json({ status: "success", data: superheroesById });
 });
 
 // Endpoint to create a new <resource_one>
@@ -71,8 +80,17 @@ app.get("/villains/", async function (req, res) {
   });
   
   // Endpoint to retrieve a <resource_twos> by id
-  app.get("/resourcetwo/:id", async function (req, res) {
-  });
+  app.get("/villains/:id", async function (req, res) {
+  const id = req.params.id;
+  const villainsById = await getVillainsById(id);
+  // Assume 404 status if the author is not found
+  if (!villainsById) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Villain not found" } });
+  }
+  res.status(200).json({ status: "success", data: villainsById });
+});
   
   // Endpoint to create a new <resource_twos>
   app.post("/resourcetwo/", async function (req, res) {
