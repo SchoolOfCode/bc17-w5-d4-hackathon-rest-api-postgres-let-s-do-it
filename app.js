@@ -72,8 +72,8 @@ app.post("/superheroes", async function (req, res) {
 // Endpoint to update a specific <resource_one> by id
 app.patch("/superheroes/:id", async function (req, res) {
 
-  const deletedRow = await updateSuperheroById(req.params.id, req.body);
-  if (!deletedRow) {
+  const updatedRow = await updateSuperheroById(req.params.id, req.body);
+  if (!updatedRow) {
     return res
       .status(404)
       .json({ status: "fail", data: { msg: "Superhero not updated" } });

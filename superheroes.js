@@ -35,6 +35,7 @@ export async function createSuperhero (body) {
   const queryText= "INSERT INTO superheroes (name, superpower, city_id, weakness) VALUES ($1, $2, $3, $4) RETURNING* ";
 
   const newSuperhero= await pool.query(queryText, [body.name, body.superpower, body['city_id'], body.weakness]);
+  
   return newSuperhero.rows[0]
   
   // Query the database to create an resource and return the newly created resource
