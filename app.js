@@ -23,7 +23,6 @@ deleteResourceTwoById,
 } from "./villains.js";
 
 
-
 // Initialize the express app
 const app = express();
 // Retrieve the port number from environment variables
@@ -32,6 +31,10 @@ const PORT = process.env.PORT;
 app.use(express.json()); // express.json() middleware is used to parse incoming JSON requests
 
 
+app.get("/cities", async (req,res) =>{
+  const i= await getCities()
+  res.json(i)
+})
 
 
 // Resource One Route Handlers
@@ -78,7 +81,7 @@ app.patch("/superheroes/:id", async function (req, res) {
       .status(404)
       .json({ status: "fail", data: { msg: "Superhero not updated" } });
   }
-  res.status(200).json({ status: "success", data: deletedRow });
+  res.status(200).json({ status: "success", data: updatedRow });
 });
 
 
