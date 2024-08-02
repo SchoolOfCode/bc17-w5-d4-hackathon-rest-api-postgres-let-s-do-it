@@ -7,9 +7,9 @@ import express from "express";
 import {
 getSuperheroes,
 getSuperheroesById,
-createResourceOne,
-updateResourceOneById,
-deleteResourceOneById,
+createSuperhero ,
+updateSuperheroById,
+deleteRowById,
 } from "./superheroes.js";
 
 
@@ -57,15 +57,44 @@ app.get("/superheroes/:id", async function (req, res) {
 });
 
 // Endpoint to create a new <resource_one>
-app.post("/resourceone/", async function (req, res) {
+app.post("/superheroes", async function (req, res) {
+  const newSuperhero = await createSuperhero(req.body);
+  if (!newSuperhero) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Superhero not added" } });
+  }
+  res.status(200).json({ status: "success", data: newSuperhero });
 });
+
+
 
 // Endpoint to update a specific <resource_one> by id
-app.patch("/resourceone/:id", async function (req, res) {
+app.patch("/superheroes/:id", async function (req, res) {
+
+  const deletedRow = await updateSuperheroById(req.params.id, req.body);
+  if (!deletedRow) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Superhero not updated" } });
+  }
+  res.status(200).json({ status: "success", data: deletedRow });
 });
 
+
+
+
+
 // Endpoint to delete a specific <resource_one> by id
-app.delete("/resourceone/:id", async function (req, res) {
+app.delete("/superheroes/:id", async function (req, res) {
+  const deletedRow= await deleteRowById(req.params.id);
+  if (!deletedRow) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Superhero not deleted" } });
+  }
+  res.status(200).json({ status: "success", data: deletedRow });
+
 });
 
 

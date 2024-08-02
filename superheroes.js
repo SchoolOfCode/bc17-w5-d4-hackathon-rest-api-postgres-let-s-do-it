@@ -5,7 +5,7 @@ import { pool } from "./db/index.js";
 export async function getSuperheroes() {
     // Query the database and return all books
     // Define the SQL query to fetch all books from the 'books' table
-    const queryText = "SELECT * FROM superheroes";
+    const queryText = "SELECT * FROM superheroes ORDER BY id ";
     // Use the pool object to send the query to the database
     const result = await pool.query(queryText)
     // The rows property of the result object contains the retrieved records
@@ -30,14 +30,31 @@ export async function getSuperheroesById(id) {
   return result.rows[0] || null;
 }
 
-export async function createResourceOne(resource) {
+export async function createSuperhero (body) {
+
+  const queryText= "INSERT INTO superheroes (name, superpower, city_id, weakness) VALUES ($1, $2, $3, $4) RETURNING* ";
+
+  const newSuperhero= await pool.query(queryText, [body.name, body.superpower, body['city_id'], body.weakness]);
+  return newSuperhero.rows[0]
+  
   // Query the database to create an resource and return the newly created resource
 }
 
-export async function updateResourceOneById(id, updates) {
-  // Query the database to update the resource and return the newly updated resource or null
+export async function updateSuperheroById(id, body) {
+
+  const query= 'UPDATE superheroes SET name= $1, superpower= $2, city_id= $3, weakness= $4   WHERE id=$5 RETURNING*'
+
+  const updatedRow= await pool.query(query, [body.name, body.superpower, body['city_id'], body.weakness, id ])
+
+  return updatedRow.rows[0]
 }
 
-export async function deleteResourceOneById(id) {
-  // Query the database to delete the resource and return the deleted resource or null
+export async function deleteRowById(id) {
+  const query= "DELETE FROM superheroes WHERE id= $1  RETURNING* ;"
+  
+  const deletedRow= await pool.query(query, [id])
+
+  return deletedRow.rows[0]
+
+
 }
