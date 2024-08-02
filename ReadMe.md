@@ -1,3 +1,14 @@
+# Getting started
+
+- run `npm install`
+- Set up your external DB connection string and set up the .env file in the appropriate manner by renaming the file and adding all necessary info.
+- run `npm run dev` to start the app
+- run `npm run reset-database` to check all is working.
+
+- Check that the connection is working by using the get route handler.
+
+
+# README for Hackathon
 
 Brief
 Over the past week, you've learned PostgreSQL, connecting to external databases, using .env files and more. It's time to put these skills into practice by building a robust API. The challenge at hand is to design, implement, and deploy an API using a managed PostgreSQL database hosted with a third-party provider like Render.
