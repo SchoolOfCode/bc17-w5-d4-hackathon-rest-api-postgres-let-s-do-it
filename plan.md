@@ -2,11 +2,12 @@ ROOM 16 Plan:
 
 - Download and clone repo.
 - Install required packages.
+- `npm install` `npm run reset-database` `npm run dev`
 - Discuss files and see whether we want new tables/Check  what files we have and what we will need to add due to making new tables.
 - Go to render and set up our Database: make sure everyone has the correct port and connection string.
 - Add applicable environment variables to .env.example and rename.
 - Make sure the .env file is spelt the same in gitignore.
-- Run the initial app to make sure it works.
+- Run the initial app to make sure it works 
 
 
 Designing and Implementing tables:
