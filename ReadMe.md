@@ -2,8 +2,9 @@
 
 - run `npm install`
 - Set up your external DB connection string and set up the .env file in the appropriate manner by renaming the file and adding all necessary info.
-- run `npm run dev` to start the app
+
 - run `npm run reset-database` to check all is working.
+- run `npm run dev` to start the ap
 
 - Check that the connection is working by using the get route handler.
 

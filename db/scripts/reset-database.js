@@ -1,54 +1,78 @@
 import { pool } from "../index.js";
 
-
-
-// >>> MAKE SURE YOU UNDERSTAND THIS FILE AND WHAT IT'S DOING <<<
-// >>> FEEL FREE TO CHANGE IT TO MAKE YOUR OWN RESOURCES (TABLES AND PROPERTIES) - YOU DON'T HAVE TO USE ALBUMS AND ARTISTS <<<
-
-
-
 async function resetDatabase() {
   try {
     // Drop existing tables if they exist
     await pool.query(`
-        DROP TABLE IF EXISTS artists CASCADE;
-        DROP TABLE IF EXISTS albums CASCADE;
+        DROP TABLE IF EXISTS superheroes CASCADE;
+        DROP TABLE IF EXISTS villains CASCADE;
+        DROP TABLE IF EXISTS cities CASCADE;
     `);
 
-    // Create the artists table
+    // Create the cities table
     await pool.query(`
-        CREATE TABLE artists (
+        CREATE TABLE cities (
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             name VARCHAR(255) NOT NULL
         );
     `);
 
-    // Create the albums table with a foreign key to the artists table
+    // Create the superheroes table
     await pool.query(`
-        CREATE TABLE albums (
+        CREATE TABLE superheroes (
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-            title VARCHAR(255) NOT NULL,
-            published_date DATE,
-            artist_id INT REFERENCES artists(id)
+            name VARCHAR(255) NOT NULL,
+            superpower VARCHAR(255) NOT NULL,
+            city_id INT REFERENCES cities(id),
+            weakness VARCHAR(255)
         );
     `);
 
-    // Seed the artists table
+    // Create the villains table
     await pool.query(`
-        INSERT INTO artists (name)
-        VALUES 
-            ('Dua Lipa'),
-            ('Jay-Z');
+        CREATE TABLE villains (
+            id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            superpower VARCHAR(255) NOT NULL,
+            city_id INT REFERENCES cities(id),
+            weakness VARCHAR(255)
+        );
     `);
 
-    // Seed the albums table
+    // Seed the cities table
     await pool.query(`
-        INSERT INTO albums (title, published_date, artist_id)
+        INSERT INTO cities (name)
         VALUES 
-            ('Dua Lipa', '2017-06-02', 1),
-            ('Future Nostalgia', '2020-03-27', 1),
-            ('Reasonable Doubt', '1996-06-25', 2),
-            ('The Blueprint', '2001-09-11', 2);
+            ('Gotham City'),
+            ('Metropolis'),
+            ('New York City'),
+            ('Wakanda'),
+            ('Central City'),
+            ('Themyscira');
+    `);
+
+    // Seed the superheroes table
+    await pool.query(`
+        INSERT INTO superheroes (name, superpower, city_id, weakness)
+        VALUES 
+            ('Batman', 'Intelligence and gadgets', 1, 'No superpowers'),
+            ('Superman', 'Flight and super strength', 2, 'Kryptonite'),
+            ('Spider-Man', 'Wall-crawling and web-slinging', 3, 'Responsibility'),
+            ('Black Panther', 'Enhanced strength and vibranium suit', 4, 'Overconfidence'),
+            ('The Flash', 'Super speed', 5, 'Overexertion'),
+            ('Wonder Woman', 'Superhuman strength and Lasso of Truth', 6, 'Binding of bracelets by a man');
+    `);
+
+    // Seed the villains table
+    await pool.query(`
+        INSERT INTO villains (name, superpower, city_id, weakness)
+        VALUES 
+            ('Joker', 'Criminal mastermind', 1, 'Insanity'),
+            ('Lex Luthor', 'Genius-level intellect', 2, 'Obsession with Superman'),
+            ('Green Goblin', 'Enhanced strength and glider', 3, 'Mental instability'),
+            ('Killmonger', 'Enhanced strength and combat skills', 4, 'Arrogance'),
+            ('Reverse-Flash', 'Negative Speed Force', 5, 'Paradox'),
+            ('Cheetah', 'Superhuman speed and strength', 6, 'Humanity');
     `);
 
     console.log("Database reset successful");

@@ -4,23 +4,23 @@ import express from "express";
 
 
 // Import your helper functions for your first resource here
-// import {
-//   getResourceOne,
-//   getResourceOneById,
-//   createResourceOne,
-//   updateResourceOneById,
-//   deleteResourceOneById,
-// } from "./resource_one.js";
+import {
+getSuperheroes,
+getResourceOneById,
+createResourceOne,
+updateResourceOneById,
+deleteResourceOneById,
+} from "./superheroes.js";
 
 
-// Import your helper functions for your second resource here
-// import {
-//   getResourceTwo,
-//   getResourceTwoById,
-//   createResourceTwo,
-//   updateResourceTwoById,
-//   deleteResourceTwoById,
-// } from "./resource_two.js";
+//Import your helper functions for your second resource here
+import {
+getVillains,
+getResourceTwoById,
+createResourceTwo,
+updateResourceTwoById,
+deleteResourceTwoById,
+} from "./villains.js";
 
 
 
@@ -37,10 +37,11 @@ app.use(express.json()); // express.json() middleware is used to parse incoming 
 // Resource One Route Handlers
 
 // Endpoint to retrieve all <resource_one>
-app.get("/resourceone/", async function (req, res) {
-    console.log("I'm alive");
-    res.status(200).send("I'm alive!");
+app.get("/superheroes/", async function (req, res) {
+  const supers = await getSuperheroes();
+  res.status(200).json({ status: "success", data: supers });
 });
+
 
 // Endpoint to retrieve a <resource_one> by id
 app.get("/resourceone/:id", async function (req, res) {
@@ -59,14 +60,14 @@ app.delete("/resourceone/:id", async function (req, res) {
 });
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-// Resource Two Route Handlers
+// VILLAINS PART
 
 // Endpoint to retrieve all <resource_twos>
-app.get("/resourcetwo/", async function (req, res) {
-    const authors = await getAuthors();
-    res.status(200).json({ status: "success", data: authors });
+app.get("/villains/", async function (req, res) {
+    const villains = await getVillains();
+    res.status(200).json({ status: "success", data: villains });
   });
   
   // Endpoint to retrieve a <resource_twos> by id
